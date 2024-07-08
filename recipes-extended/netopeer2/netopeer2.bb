@@ -7,24 +7,23 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 inherit cmake pkgconfig
 
 SRC_URI = "git://github.com/CESNET/Netopeer2.git;protocol=https;branch=devel \
-    file://netopeer2_support_recall_home.patch \
-    file://netopeer2_disable_find_sysrepo_execute.patch \
     file://netopeer2-server"
 
-PV = "2.1.36+git${SRCPV}"
-SRCREV = "57396a18046f70aeb4d05dce14fb1d1ddc9dfc39"
+PV = "2.2.28+git${SRCPV}"
+SRCREV = "b20bab91e596a24bb23f15c49d7e33de3ded0a48"
 
 S = "${WORKDIR}/git"
 
 DEPENDS = "libyang libnetconf2 sysrepo curl"
 RDEPENDS:${PN} += "bash curl"
 
-EXTRA_OECMAKE = " -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE:String=Release -DINSTALL_MODULES=OFF -DGENERATE_HOSTKEY=OFF -DMERGE_LISTEN_CONFIG=OFF"
+EXTRA_OECMAKE = " -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE:String=Release -DSYSREPO_SETUP=OFF"
 
 FILES:${PN} += "/usr/share/yang* /usr/share/netopeer2/* /usr/lib/sysrepo-plugind/*"
 
 do_install:append () {
     install -d ${D}/etc/netopeer2/scripts
+    install -o root -g root ${S}/scripts/common.sh ${D}/etc/netopeer2/scripts/common.sh
     install -o root -g root ${S}/scripts/setup.sh ${D}/etc/netopeer2/scripts/setup.sh
     install -o root -g root ${S}/scripts/merge_hostkey.sh ${D}/etc/netopeer2/scripts/merge_hostkey.sh
     install -o root -g root ${S}/scripts/merge_config.sh ${D}/etc/netopeer2/scripts/merge_config.sh

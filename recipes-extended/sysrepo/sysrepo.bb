@@ -7,10 +7,11 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 inherit cmake pkgconfig python3native python3-dir
 
 SRC_URI = "git://github.com/sysrepo/sysrepo.git;protocol=https;branch=devel \
+    file://sysrepo_support_SYS_futex_macro_in_riscv32.patch \
     file://sysrepo"
 
-PV = "2.1.84+git${SRCPV}"
-SRCREV = "df89fc02e301cc8f2e6b30ec37b990f52ca1d5c4"
+PV = "2.10.1+git${SRCPV}"
+SRCREV = "7a8ebf352316ec17846d728a3132e7dee2418a6c"
 
 S = "${WORKDIR}/git"
 
@@ -23,9 +24,9 @@ EXTRA_OECMAKE = " -DCMAKE_INSTALL_PREFIX:PATH=/usr -DCMAKE_BUILD_TYPE:String=Rel
 do_install:append () {
     install -d ${D}/etc/sysrepo/data/notifications
     install -d ${D}/etc/sysrepo/yang
-    install -o root -g root ${S}/modules/ietf-netconf-notifications.yang ${D}/etc/sysrepo/yang/ietf-netconf-notifications@2012-02-06.yang
-    install -o root -g root ${S}/modules/ietf-netconf-with-defaults.yang ${D}/etc/sysrepo/yang/ietf-netconf-with-defaults@2011-06-01.yang
-    install -o root -g root ${S}/modules/ietf-netconf.yang ${D}/etc/sysrepo/yang/ietf-netconf@2011-06-01.yang
+    install -o root -g root ${S}/modules/ietf-netconf-notifications@2012-02-06.yang ${D}/etc/sysrepo/yang/ietf-netconf-notifications@2012-02-06.yang
+    install -o root -g root ${S}/modules/ietf-netconf-with-defaults@2011-06-01.yang ${D}/etc/sysrepo/yang/ietf-netconf-with-defaults@2011-06-01.yang
+    install -o root -g root ${S}/modules/ietf-netconf@2013-09-29.yang ${D}/etc/sysrepo/yang/ietf-netconf@2013-09-29.yang
     install -d ${D}/etc/init.d
     install -d ${D}/usr/lib/sysrepo/plugins
     install -o root -g root ${WORKDIR}/sysrepo ${D}/etc/init.d/sysrepo

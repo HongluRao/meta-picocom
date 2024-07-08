@@ -1,0 +1,25 @@
+diff --color -ruN --exclude .DS_Store sysrepo-2.10.1_old/CMakeLists.txt sysrepo-2.10.1_new/CMakeLists.txt
+--- sysrepo-2.10.1_old/CMakeLists.txt   2024-06-28 19:24:23.000000000 +0800
++++ sysrepo-2.10.1_new/CMakeLists.txt   2024-07-10 10:25:16.146389959 +0800
+@@ -478,6 +478,7 @@
+     add_executable(sysrepo-plugind ${SYSREPOPLUGIND_SRC} ${compatsrc})
+     target_link_libraries(sysrepo-plugind sysrepo)
+ endif()
++target_link_libraries(sysrepo-plugind atomic)
+
+ # include repository files with highest priority
+ include_directories("${PROJECT_SOURCE_DIR}/src")
+diff --color -ruN --exclude .DS_Store sysrepo-2.10.1_old/src/sr_cond/sr_cond_futex.c sysrepo-2.10.1_new/src/sr_cond/sr_cond_futex.c
+--- sysrepo-2.10.1_old/src/sr_cond/sr_cond_futex.c      2024-06-28 19:24:23.000000000 +0800
++++ sysrepo-2.10.1_new/src/sr_cond/sr_cond_futex.c      2024-07-09 17:03:49.249846715 +0800
+@@ -34,6 +34,10 @@
+ #include "log.h"
+ #include "sysrepo_types.h"
+
++#if !defined(SYS_futex) && defined(SYS_futex_time64)
++#define SYS_futex SYS_futex_time64
++#endif
++
+ sr_error_info_t *
+ sr_cond_init(sr_cond_t *cond, int UNUSED(shared), int UNUSED(robust))
+ {

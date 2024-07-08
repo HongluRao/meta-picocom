@@ -7,14 +7,13 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 inherit cmake pkgconfig
 
-SRCREV = "1f50231323e9dd198cf7c120563897f42b8cae1d"
-SRC_URI = "git://github.com/CESNET/libnetconf2.git;protocol=https;branch=devel \
-    file://libnetconf2_support_recall_home.patch"
+SRCREV = "47ca0fb5f94588d112ec2bf26946948189e1c18d"
+SRC_URI = "git://github.com/CESNET/libnetconf2.git;protocol=https;branch=devel"
 
-PV = "2.1.18+git${SRCPV}"
+PV = "3.3.3+git${SRCPV}"
 
 S = "${WORKDIR}/git"
 
-DEPENDS = "libssh libpam openssl libyang libxcrypt"
+DEPENDS = "libssh libpam openssl libyang libxcrypt curl"
 
 FILES:${PN} += "/usr/share/yang/*"
