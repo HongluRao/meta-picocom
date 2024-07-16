@@ -10,6 +10,7 @@ BRANCH = "picocom/master"
 SRC_URI = "git://github.com/picocom-chips/linux.git;protocol=https;branch=${BRANCH} \
            file://pc805_defconfig \
            file://pc805.dts \
+           file://Fix-i2c-timeout-bug.patch \
           "
 
 do_configure:append:pc805() {
